@@ -92,7 +92,7 @@ def update_price_and_graph(n):
     		daily_report = generate_daily_report(df)
 	else:
     		daily_report = ""
-	return f"Current Solana Price {price}",fig
+	return f"Current Solana Price {price}",fig,daily_report
 
 if __name__ == "__main__":
 	app.run_server(debug=True,host='0.0.0.0', port=8050 )
