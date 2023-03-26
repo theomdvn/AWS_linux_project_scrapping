@@ -66,14 +66,14 @@ app.layout = html.Div([
 	dcc.Graph(id="price-time-series"),
 	dcc.Interval(
 		id='interval-component',
-		interval=5*60*1000,
+		interval=20*1000,
 		n_intervals=0
 	)
 ])
 
-@app.callback(Output("solana-price","children"),
+@app.callback([Output("solana-price","children"),
 		Output("price-time-series","figure"),
-		Output("daily-report", "children"),
+		Output("daily-report", "children")],
 		Input("interval-component","n_intervals"))
 
 def update_price_and_graph(n):
@@ -91,9 +91,10 @@ def update_price_and_graph(n):
 	if current_time.hour == 20 and current_time.minute == 0:
     		daily_report = generate_daily_report(df)
 	else:
-    		daily_report = ""
+    		daily_report = generate_daily_report(pd.DataFrame()) 
 	return f"Current Solana Price {price}",fig,daily_report
 
 if __name__ == "__main__":
 	app.run_server(debug=True,host='0.0.0.0', port=8050 )
+
 
